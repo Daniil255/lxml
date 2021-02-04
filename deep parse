@@ -1,0 +1,25 @@
+import xml.etree.ElementTree as ET
+import pandas as pd
+
+lst = []
+
+def pars(val):
+    global data
+    for value1 in val:
+        if value1.tag:
+            data[value1.tag] = value1.text
+            pars(value1)
+
+
+
+root = ET.parse('test.xml').getroot()
+
+for value1 in root:
+    data = {}
+    for value in value1:
+        data[value.tag] = value.text
+        pars(value)
+    lst.append(data)
+
+df = pd.DataFrame(lst)
+
